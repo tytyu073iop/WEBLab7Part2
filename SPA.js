@@ -52,3 +52,25 @@ function switchToState(state) {
 }
 
 switchToState("Main")
+
+function getTopPlantsTable() {
+  $.ajax(`http://localhost:3000/JSON/plants`,
+    { type:'GET', dataType:'json', success:buildTopPlantsTable, error:ErrorHandler }
+  );
+}
+
+function buildTopPlantsTable(jsonData) {
+  // console.log(jsonData)
+  // console.log(typeof jsonData)
+  // let hash = JSON.parse(jsonData);
+  // console.log("building");
+  let hash = jsonData
+
+  let html = "<table><thead><tr><th>Растение</th><th>Как ухаживать за ним</th></tr></thead><tbody>"
+  for (let key in hash) {
+      html += `<tr><td>${key}</td><td>${hash[key]}</td></tr>`;
+  }
+  html += "</tbody></table>";
+
+  $("#tablePlaceHolder").html(html);
+}
